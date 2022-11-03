@@ -1,8 +1,5 @@
 import TCGSDK, { InitConfig } from '@/utils/tcg-sdk';
-import { joystick } from '@/utils/tcg-sdk/plugin';
 import { GameOptions } from '@/types/config';
-import device from 'current-device';
-import Bottom from '@/buttons/bottom';
 import StationApi from '@/api/station';
 import UeDataComm from '@/ue';
 
@@ -61,13 +58,15 @@ class Game {
       {
         uuid: params.uuid,
         ticket: params.ticket,
+        token: params.ticket,
         stationId: params.stationId,
         clientSession: TCGSDK.getClientSession(),
         // screenWidth: width,
         // screenHeight: height,
         screenWidth: 1920,
         screenHeight: 1080,
-        gameParams: ` -IP=${params.ip} -port=${params.port} -hasClient=true -ResX=${1920} -ResY=${1080}`,
+        // gameParams: ` -IP=${params.ip} -port=${params.port} -hasClient=true -ResX=${1920} -ResY=${1080}`,
+        gameParams: ` -IP=110.53.180.44 -port=7778 -hasClient=true -ResX=${1920} -ResY=${1080}`,
         gameContext: '',
       },
       {

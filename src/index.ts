@@ -83,7 +83,7 @@ class StationWebEditorSDK {
                 showOnHbMessage: false,
               },
             },
-            params,
+            { ...params, stationId },
             () => {},
           );
         } else {
