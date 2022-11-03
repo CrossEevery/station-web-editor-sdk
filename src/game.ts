@@ -51,8 +51,6 @@ class Game {
     // 接口 StartGame 其实就是后台串行调用了云API的 TrylockWorker + CreateSession
     // 尝试锁定机器（TrylockWorker） https://cloud.tencent.com/document/api/1162/40738
     // 创建会话（CreateSession） https://cloud.tencent.com/document/api/1162/40740
-    const that = t;
-    console.log(params);
 
     StationApi.startEditStation(
       {
@@ -61,12 +59,9 @@ class Game {
         token: params.ticket,
         stationId: params.stationId,
         clientSession: TCGSDK.getClientSession(),
-        // screenWidth: width,
-        // screenHeight: height,
         screenWidth: 1920,
         screenHeight: 1080,
-        // gameParams: ` -IP=${params.ip} -port=${params.port} -hasClient=true -ResX=${1920} -ResY=${1080}`,
-        gameParams: ` -IP=110.53.180.44 -port=7778 -hasClient=true -ResX=${1920} -ResY=${1080}`,
+        gameParams: ` -IP=${params.ip} -port=${params.port} -hasClient=true -ResX=${1920} -ResY=${1080}`,
         gameContext: '',
       },
       {
@@ -80,10 +75,7 @@ class Game {
 
       if (code === 200 && data) {
         TCGSDK.start(data.serverSession);
-        // that.gameUUID = data.gameUUID;
-        // that.hostUUID = data.hostUUID;
       } else {
-        // Message.error(message)
         TCGSDK.destroy();
         // your logics
         if (failCallback) {

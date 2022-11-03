@@ -64,8 +64,9 @@ class StationWebEditorSDK {
         ticket,
         token: ticket,
       };
-      StationApi.getStationDetail(params).then((res: any) => {
+      StationApi.getStationDetail(params).then(async (res: any) => {
         if (res.code === 200 && res.data) {
+          const response = await StationApi.getStationConfig(params);
           let game = new Game();
           game.start(
             {
@@ -83,7 +84,7 @@ class StationWebEditorSDK {
                 showOnHbMessage: false,
               },
             },
-            { ...params, stationId },
+            { ...params, stationId, ip: response.data.ip, port: response.data.port },
             () => {},
           );
         } else {
