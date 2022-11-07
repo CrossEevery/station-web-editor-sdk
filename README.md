@@ -50,6 +50,25 @@ npm run build
      StationWebEditorSDK.load();
      ```
 
+   - 结束界面
+
+     ```javascript
+     StationWebEditorSDK.stop();
+     ```
+
+   - 获取广告牌列表(最佳方式是在load成功后10s左右再去获取广告牌，否则有可能会拿到空数据)
+
+     ```javascript
+       StationWebEditorSDK.getBillboards()
+     ```
+
+   - 在游戏中设置广告牌
+     这个方法可以在游戏中设置广告牌上显示图片并且切换到广告牌正面视角
+     
+     ```javascript
+       StationWebEditorSDK.switchBillboard("2","图片地址")
+     ```
+
    - api 使用，例如：
 
      ```javascript

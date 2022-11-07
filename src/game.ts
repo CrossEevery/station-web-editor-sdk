@@ -11,6 +11,7 @@ class Game {
   private cameraInterval?: any;
   private gameInterval?: any;
   private currentBillboardId?: string;
+  public billboardList: string[] = [];
 
   start(options: InitConfig, params: GameOptions, failCallback: any) {
     this.ue_data_comm = new UeDataComm();
@@ -23,9 +24,11 @@ class Game {
       // 连接成功回调
       onConnectSuccess: async (res) => {
         // 设置流分辨率，设置鼠标不可锁定
-        // this.isConnect = true;
+        this.isConnect = true;
         TCGSDK.setStreamProfile({ fps: 60, max_bitrate: 10, min_bitrate: 8 });
         TCGSDK.setMoveSensitivity(2.0);
+
+        console.log(this);
 
         await this.TransferCameraData('start');
       },
@@ -44,6 +47,20 @@ class Game {
         // console.log('%c onInitSuccess', 'color: red', res)
         await this.StartGame(params, failCallback, this);
       },
+      onTouchEvent: (res) => {
+        // 针对单指触控操作
+        if (res.length === 1) {
+          // @ts-ignore
+          const { id, type, pageX, pageY } = res.pop();
+          TCGSDK.mouseMove(id, type, pageX, pageY);
+          if (type === 'touchstart') {
+            TCGSDK.sendRawEvent({ type: 'mouseleft', down: true });
+          }
+          if (type === 'touchend' || type === 'touchcancel') {
+            TCGSDK.sendRawEvent({ type: 'mouseleft', down: false });
+          }
+        }
+      },
     });
   }
 
@@ -61,7 +78,7 @@ class Game {
         clientSession: TCGSDK.getClientSession(),
         screenWidth: 1920,
         screenHeight: 1080,
-        gameParams: ` -IP=${params.ip} -port=${params.port} -hasClient=true -ResX=${1920} -ResY=${1080}`,
+        gameParams: `-IP=${params.ip} -port=${params.port} -hasClient=true -ResX=${1920} -ResY=${1080}`,
         gameContext: '',
       },
       {
@@ -85,7 +102,12 @@ class Game {
     });
   }
 
-  async TransferCameraData(msg: string) {
+  public async stopGame(params: any) {
+    StationApi.endEditStation(params);
+    TCGSDK.destroy();
+  }
+
+  public async TransferCameraData(msg: string) {
     if (!this.isConnect) {
       console.log('未连接画面，无法开启数据通道');
       return;
@@ -93,11 +115,7 @@ class Game {
 
     // 接收云端数据的回调
     const onMessage = (msg: string) => {
-      console.log('收到云端应用回传数据:', msg);
       this.cameraState = 1;
-      if (this.dataState === 1 && this.cameraState === 1) {
-        UeDataComm.handleMsg(msg, () => {});
-      }
       if (this.cameraInterval) {
         clearInterval(this.cameraInterval);
         this.cameraInterval = null;
@@ -138,7 +156,7 @@ class Game {
         console.log('18784:', msg);
         // 随便发送一个绑定包，使云端应用的UDP服务能获得代理端口
         result.sendMessage('start');
-        this.cameraInterval = setInterval(this.getCameras, 2000);
+        this.cameraInterval = setInterval(() => this.getCameras(), 2000);
         UeDataComm.camera_data_channel = result;
       }
     } else {
@@ -157,10 +175,11 @@ class Game {
 
     // 接收云端数据的回调
     const onMessage = (msg: string) => {
-      console.log('收到云端应用回传数据:', msg);
       this.dataState = 1;
       if (this.dataState === 1 && this.cameraState === 1) {
-        UeDataComm.handleMsg(msg, () => {});
+        UeDataComm.handleMsg(msg, (result: any) => {
+          this.billboardList = result;
+        });
       }
 
       if (this.gameInterval) {
@@ -202,7 +221,7 @@ class Game {
       if (result.code === 0) {
         // 随便发送一个绑定包，使云端应用的UDP服务能获得代理端口
         result.sendMessage('start');
-        this.gameInterval = setInterval(this.getGates, 2000);
+        this.gameInterval = setInterval(() => this.getGates(), 2000);
         UeDataComm.data_channel = result;
       }
     } else {

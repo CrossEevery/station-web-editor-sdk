@@ -49,6 +49,15 @@ class StationApi {
   /**
    * 开启空间站容器
    * @param data
+   * data.uuid
+   * data.ticket,
+   * data.token,
+   * data.stationId,
+   * data.clientSession: TCGSDK.getClientSession(),
+   * data.screenWidth: 1920,
+   * data.screenHeight: 1080,
+   * data.ameParams: `-IP=${params.ip} -port=${params.port} -hasClient=true -ResX=${1920} -ResY=${1080}`,
+   * data.gameContext: '',
    * @param params
    */
   public startEditStation(data: Object, params: Object) {
@@ -61,14 +70,6 @@ class StationApi {
    */
   public endEditStation(data: Object) {
     return this.get('/station/container/stop', data);
-  }
-
-  /**
-   * 删除素材文件夹
-   * @param data {uuid:'',ticket:'',folderid:''}
-   */
-  public deleteMaterial(data: Object) {
-    return this.get('/station/editor/element/delete', data);
   }
 
   /**

@@ -26,6 +26,7 @@ class StationWebEditorSDK {
 
   public initOptions?: InitOptions;
   public stationApi?: any;
+  public game?: Game;
 
   /**
    * init
@@ -67,8 +68,8 @@ class StationWebEditorSDK {
       StationApi.getStationDetail(params).then(async (res: any) => {
         if (res.code === 200 && res.data) {
           const response = await StationApi.getStationConfig(params);
-          let game = new Game();
-          game.start(
+          this.game = new Game();
+          this.game.start(
             {
               appid: this.initOptions?.appid,
               mount: this.initOptions?.mount || 'station-editor',
@@ -92,6 +93,36 @@ class StationWebEditorSDK {
         }
       });
     });
+  }
+
+  /**
+   * 进入编辑模式
+   */
+  enterEditMode() {
+    this.game?.enterEditMode();
+  }
+
+  /**
+   * 切换编辑的公告牌
+   * @param id 广告牌Id，例如 1
+   * @param path 图片路径
+   */
+  switchBillboard(id: string, path: string) {
+    this.game?.switchBillboard(id, path);
+  }
+
+  /**
+   * 结束
+   */
+  stop() {
+    this.game?.stopGame({ uuid: this.initOptions?.uuid, ticket: this.initOptions?.ticket, gameuuid: '', hostuuid: '' });
+  }
+
+    /**
+     * 获取游戏中的广告牌列表
+     */
+  public getBillboards() {
+    return this.game?.billboardList;
   }
 }
 

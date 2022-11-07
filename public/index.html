@@ -11,6 +11,22 @@
     <div id="station-editor"></div>
   </body>
   <script>
+    StationWebEditorSDK.init({
+      uuid: '83b51ed77f235af087383bf1e4d526a1',
+      ticket: 'da0uwbnjyhmquyfaz9mus1rbjqeo1dtm',
+      stationId: 11,
+      api: 'https://api.open.crossevery.com',
+      mount: 'station-editor',
+    });
+    StationWebEditorSDK.load();
 
+
+    setTimeout(() => {
+     const billboards =  StationWebEditorSDK.getBillboards();
+      console.log(billboards)
+      // StationWebEditorSDK.enterEditMode();
+      // StationWebEditorSDK.stop();
+      StationWebEditorSDK.switchBillboard("2","")
+    }, 20000);
   </script>
 </html>
