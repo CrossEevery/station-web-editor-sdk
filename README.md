@@ -72,7 +72,8 @@ npm run build
    - api 使用，例如：
 
      ```javascript
-     StationWebEditorSDK.stationApi.getStationDetail(...params);
+     StationWebEditorSDK.stationApi.saveBillboard(...params); // 保存广告牌信息
+     StationWebEditorSDK.stationApi.getBillboard(...params); // 获取已设置的广告牌列表信息
      ```
 
-     详细接口可查看 /src/api/station.ts 文件
+     接口详情可查看 /src/api/station.ts 文件
