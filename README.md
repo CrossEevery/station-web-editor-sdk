@@ -73,7 +73,7 @@ npm run build
 
      ```javascript
      StationWebEditorSDK.stationApi.saveBillboard(...params); // 保存广告牌信息
-     StationWebEditorSDK.stationApi.getBillboard(...params); // 获取已设置的广告牌列表信息
+     StationWebEditorSDK.stationApi.getBillboardList(...params); // 获取已设置的广告牌列表信息
      ```
 
      接口详情可查看 /src/api/station.ts 文件
