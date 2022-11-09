@@ -41,7 +41,7 @@ class UeDataComm {
       'CI-BILLBOARD-INSTSET': 1,
     };
 
-    return JSON.parse(JSON.stringify(params));
+    return JSON.stringify(params);
   }
 }
 

@@ -56,7 +56,7 @@ npm run build
      StationWebEditorSDK.stop();
      ```
 
-   - 获取广告牌列表(最佳方式是在load成功后10s左右再去获取广告牌，否则有可能会拿到空数据)
+   - 获取游戏中的广告牌列表(最佳方式是在load成功后10s左右再去获取广告牌，否则有可能会拿到空数据)
 
      ```javascript
        StationWebEditorSDK.getBillboards()
@@ -69,7 +69,7 @@ npm run build
        StationWebEditorSDK.switchBillboard("2","图片地址")
      ```
 
-   - api 使用，例如：
+   - 后端 api 使用，例如：
 
      ```javascript
      StationWebEditorSDK.stationApi.saveBillboard(...params); // 保存广告牌信息
