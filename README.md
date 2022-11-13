@@ -129,6 +129,7 @@ import StationWebEditorSDK from 'station-web-editor-sdk';
   | ------- | ---------------- | ------ | ------------- |
   | code    |                  | number |
   | message |                  | string |
+  | data    |                  | object |
   |         | id               | string | 广告位 id     |
   |         | uuid             | string | 用户 uuid     |
   |         | code             | string |               |
