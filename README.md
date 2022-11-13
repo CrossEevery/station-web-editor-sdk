@@ -105,6 +105,8 @@ import StationWebEditorSDK from 'station-web-editor-sdk';
 
 如需广告牌可持久化显示，需要从调用后端 api 保存和获取广告牌信息
 
+**在上文中广告牌编号位 Name，与下文的 slotCode 值相同**
+
 - 将广告位信息保存在数据库中
 
   ```javascript
