@@ -2,6 +2,7 @@ import TCGSDK, { InitConfig } from '@/utils/tcg-sdk';
 import { GameOptions } from '@/types/config';
 import StationApi from '@/api/station';
 import UeDataComm from '@/ue';
+import * as Cookies from 'js-cookie'
 
 class Game {
   private ue_data_comm?: UeDataComm;
@@ -91,6 +92,7 @@ class Game {
       const { code, data } = res;
 
       if (code === 200 && data) {
+        Cookies.set('cross_sdk_gameuuid',data.gameUUID)
         TCGSDK.start(data.serverSession);
       } else {
         TCGSDK.destroy();

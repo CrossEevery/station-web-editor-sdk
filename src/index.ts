@@ -115,7 +115,7 @@ class StationWebEditorSDK {
    * 结束
    */
   stop() {
-    this.game?.stopGame({ uuid: this.initOptions?.uuid, ticket: this.initOptions?.ticket, gameuuid: '', hostuuid: '' });
+    this.game?.stopGame({ uuid: this.initOptions?.uuid, ticket: this.initOptions?.ticket, gameuuid: Cookies.get("cross_sdk_gameuuid") || '', hostuuid: '' });
   }
 
     /**
